@@ -9,19 +9,29 @@ import java.sql.SQLException;
 
 public class UserService {
 
-    // ATRIBUTOS
+    //Declaración de objeto de tipo ServiceLogger
     private ServiceLogger logger;
 
+    //Constructor para usar el objeto creado
     public UserService() {
 
         this.logger = new ServiceLogger();
     }
 
 
+    /**
+     * Método checkLogin
+     * @param id Id introducido por el usuario
+     * @param pass Contraseña introducida por el usuario
+     * @return true si se logeó con éxito | false si no lo hizo
+     */
     public boolean checkLogin(String id, String pass){
+
+        //Se crea la conexión
         ConectarDB conectarDB = new ConectarDB(DBUtils.USER, DBUtils.PASS, DBUtils.DB_NAME);
         conectarDB.realizarConexion();
 
+        //Se codifica la contraseña para dejarla encriptada en la base de datos
         String contrasenaCodificada = codificar(pass);
 
         try {
@@ -30,7 +40,9 @@ public class UserService {
             pst.setString(1, id);
             pst.setString(2, contrasenaCodificada);
 
+            //Se ejecuta la query
             ResultSet rs = pst.executeQuery();
+
 
             pst = conectarDB.obtenerConexion().prepareStatement(DBUtils.QUERY_UPDATE_NACCESOS);
             pst.setString(1,id);

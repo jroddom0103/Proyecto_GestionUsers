@@ -50,6 +50,8 @@ public class PanelAlta extends JPanel implements ItemListener {
     MouseListener listenerAlta = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent e) {
+
+            //Método para agregar usuarios comprobando cualquier posible problema de formato
             if (serviceUser.agregarUser(textFieldId.getText(),textFieldCorreo.getText(),textFieldPass.getText(), textFieldPass2.getText(),comboAdmin.getSelectedItem().toString())){
                 JOptionPane.showMessageDialog(framePadre, "Usuario introducido.");
                 serviceLogger.registrarLog(textFieldId.getText(),"ALTA","Correcta");
